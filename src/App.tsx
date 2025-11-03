@@ -1,7 +1,6 @@
 // App.tsx
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
-// auth import missing due to broken firebaseConfig export
 import Register from "./Register";
 import Login from "./Login";
 import { auth } from "./firebaseConfig";
@@ -10,8 +9,7 @@ const App = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Incorrectly calling onAuthStateChanged without `auth`
-    onAuthStateChanged((currentUser) => setUser(currentUser));
+    return onAuthStateChanged(auth, (currentUser) => setUser(currentUser));
   }, []);
 
   const handleLogout = async () => {
