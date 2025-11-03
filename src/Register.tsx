@@ -1,7 +1,6 @@
 import { useState, FormEvent } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-// Missing import for `auth`
-import { auth } from "./firebaseConfig"; // This import will cause an error due to missing `auth` export
+import { auth } from "./firebaseConfig";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -10,18 +9,18 @@ const Register: React.FC = () => {
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // Incorrect usage of `auth` in `createUserWithEmailAndPassword`
-      await createUserWithEmailAndPassword(email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       alert("User registered!");
-    } catch (err: any) {
-      console.log("Registration error:", err.message); // Error handling is incomplete
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+      console.log("Registration error:", errorMessage); // Error handling is incomplete
     }
   };
 
   return (
     <form onSubmit={handleRegister}>
       <input
-        type="text" // Email input should be type "email"
+        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -32,7 +31,7 @@ const Register: React.FC = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button>Register</button> {/* Missing `type="submit"` */}
+      <button type="submit">Register</button>
     </form>
   );
 };
