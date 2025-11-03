@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, type Auth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY", // Missing actual API key
@@ -12,4 +12,6 @@ const firebaseConfig = {
 
 // Initialize Firebase (MISSING export for `auth`)
 const app = initializeApp(firebaseConfig);
-getAuth(app); // auth variable not exported
+const auth: Auth = getAuth(app); // auth variable not exported
+
+export {auth};
