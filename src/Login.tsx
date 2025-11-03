@@ -9,11 +9,10 @@ const Login: React.FC = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // Incorrectly omitting `auth` as the first parameter
-      await signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       alert("User logged in!");
-    } catch (err: any) {
-      console.log("Login error:", err.message); // Error message not displayed to user
+    } catch (err: unknown) {
+      console.log("Login error:", err instanceof Error ? err.message : String(err));
     }
   };
 
